@@ -208,6 +208,10 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  sentLikes?: Prisma.LikeListRelationFilter
+  receivedLikes?: Prisma.LikeListRelationFilter
+  matchesA?: Prisma.MatchListRelationFilter
+  matchesB?: Prisma.MatchListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -215,6 +219,10 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   username?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  sentLikes?: Prisma.LikeOrderByRelationAggregateInput
+  receivedLikes?: Prisma.LikeOrderByRelationAggregateInput
+  matchesA?: Prisma.MatchOrderByRelationAggregateInput
+  matchesB?: Prisma.MatchOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -225,6 +233,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  sentLikes?: Prisma.LikeListRelationFilter
+  receivedLikes?: Prisma.LikeListRelationFilter
+  matchesA?: Prisma.MatchListRelationFilter
+  matchesB?: Prisma.MatchListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -253,6 +265,10 @@ export type UserCreateInput = {
   name: string
   username: string
   role: string
+  sentLikes?: Prisma.LikeCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchCreateNestedManyWithoutUserBInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -260,12 +276,20 @@ export type UserUncheckedCreateInput = {
   name: string
   username: string
   role: string
+  sentLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchUncheckedCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchUncheckedCreateNestedManyWithoutUserBInput
 }
 
 export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUpdateManyWithoutUserBNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -273,6 +297,10 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUncheckedUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUncheckedUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUncheckedUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUncheckedUpdateManyWithoutUserBNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -324,6 +352,11 @@ export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -336,6 +369,334 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type UserCreateNestedOneWithoutSentLikesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentLikesInput, Prisma.UserUncheckedCreateWithoutSentLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReceivedLikesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedLikesInput, Prisma.UserUncheckedCreateWithoutReceivedLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSentLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentLikesInput, Prisma.UserUncheckedCreateWithoutSentLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentLikesInput
+  upsert?: Prisma.UserUpsertWithoutSentLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentLikesInput, Prisma.UserUpdateWithoutSentLikesInput>, Prisma.UserUncheckedUpdateWithoutSentLikesInput>
+}
+
+export type UserUpdateOneRequiredWithoutReceivedLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedLikesInput, Prisma.UserUncheckedCreateWithoutReceivedLikesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedLikesInput
+  upsert?: Prisma.UserUpsertWithoutReceivedLikesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedLikesInput, Prisma.UserUpdateWithoutReceivedLikesInput>, Prisma.UserUncheckedUpdateWithoutReceivedLikesInput>
+}
+
+export type UserCreateNestedOneWithoutMatchesAInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMatchesAInput, Prisma.UserUncheckedCreateWithoutMatchesAInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMatchesAInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutMatchesBInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMatchesBInput, Prisma.UserUncheckedCreateWithoutMatchesBInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMatchesBInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMatchesANestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMatchesAInput, Prisma.UserUncheckedCreateWithoutMatchesAInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMatchesAInput
+  upsert?: Prisma.UserUpsertWithoutMatchesAInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMatchesAInput, Prisma.UserUpdateWithoutMatchesAInput>, Prisma.UserUncheckedUpdateWithoutMatchesAInput>
+}
+
+export type UserUpdateOneRequiredWithoutMatchesBNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMatchesBInput, Prisma.UserUncheckedCreateWithoutMatchesBInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMatchesBInput
+  upsert?: Prisma.UserUpsertWithoutMatchesBInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMatchesBInput, Prisma.UserUpdateWithoutMatchesBInput>, Prisma.UserUncheckedUpdateWithoutMatchesBInput>
+}
+
+export type UserCreateWithoutSentLikesInput = {
+  name: string
+  username: string
+  role: string
+  receivedLikes?: Prisma.LikeCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchCreateNestedManyWithoutUserBInput
+}
+
+export type UserUncheckedCreateWithoutSentLikesInput = {
+  id?: number
+  name: string
+  username: string
+  role: string
+  receivedLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchUncheckedCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchUncheckedCreateNestedManyWithoutUserBInput
+}
+
+export type UserCreateOrConnectWithoutSentLikesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentLikesInput, Prisma.UserUncheckedCreateWithoutSentLikesInput>
+}
+
+export type UserCreateWithoutReceivedLikesInput = {
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeCreateNestedManyWithoutSenderInput
+  matchesA?: Prisma.MatchCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchCreateNestedManyWithoutUserBInput
+}
+
+export type UserUncheckedCreateWithoutReceivedLikesInput = {
+  id?: number
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutSenderInput
+  matchesA?: Prisma.MatchUncheckedCreateNestedManyWithoutUserAInput
+  matchesB?: Prisma.MatchUncheckedCreateNestedManyWithoutUserBInput
+}
+
+export type UserCreateOrConnectWithoutReceivedLikesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedLikesInput, Prisma.UserUncheckedCreateWithoutReceivedLikesInput>
+}
+
+export type UserUpsertWithoutSentLikesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentLikesInput, Prisma.UserUncheckedUpdateWithoutSentLikesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentLikesInput, Prisma.UserUncheckedCreateWithoutSentLikesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSentLikesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentLikesInput, Prisma.UserUncheckedUpdateWithoutSentLikesInput>
+}
+
+export type UserUpdateWithoutSentLikesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedLikes?: Prisma.LikeUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUpdateManyWithoutUserBNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSentLikesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedLikes?: Prisma.LikeUncheckedUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUncheckedUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUncheckedUpdateManyWithoutUserBNestedInput
+}
+
+export type UserUpsertWithoutReceivedLikesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedLikesInput, Prisma.UserUncheckedUpdateWithoutReceivedLikesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedLikesInput, Prisma.UserUncheckedCreateWithoutReceivedLikesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReceivedLikesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedLikesInput, Prisma.UserUncheckedUpdateWithoutReceivedLikesInput>
+}
+
+export type UserUpdateWithoutReceivedLikesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUpdateManyWithoutSenderNestedInput
+  matchesA?: Prisma.MatchUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUpdateManyWithoutUserBNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReceivedLikesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUncheckedUpdateManyWithoutSenderNestedInput
+  matchesA?: Prisma.MatchUncheckedUpdateManyWithoutUserANestedInput
+  matchesB?: Prisma.MatchUncheckedUpdateManyWithoutUserBNestedInput
+}
+
+export type UserCreateWithoutMatchesAInput = {
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeCreateNestedManyWithoutReceiverInput
+  matchesB?: Prisma.MatchCreateNestedManyWithoutUserBInput
+}
+
+export type UserUncheckedCreateWithoutMatchesAInput = {
+  id?: number
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutReceiverInput
+  matchesB?: Prisma.MatchUncheckedCreateNestedManyWithoutUserBInput
+}
+
+export type UserCreateOrConnectWithoutMatchesAInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMatchesAInput, Prisma.UserUncheckedCreateWithoutMatchesAInput>
+}
+
+export type UserCreateWithoutMatchesBInput = {
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchCreateNestedManyWithoutUserAInput
+}
+
+export type UserUncheckedCreateWithoutMatchesBInput = {
+  id?: number
+  name: string
+  username: string
+  role: string
+  sentLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutSenderInput
+  receivedLikes?: Prisma.LikeUncheckedCreateNestedManyWithoutReceiverInput
+  matchesA?: Prisma.MatchUncheckedCreateNestedManyWithoutUserAInput
+}
+
+export type UserCreateOrConnectWithoutMatchesBInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMatchesBInput, Prisma.UserUncheckedCreateWithoutMatchesBInput>
+}
+
+export type UserUpsertWithoutMatchesAInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMatchesAInput, Prisma.UserUncheckedUpdateWithoutMatchesAInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMatchesAInput, Prisma.UserUncheckedCreateWithoutMatchesAInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMatchesAInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMatchesAInput, Prisma.UserUncheckedUpdateWithoutMatchesAInput>
+}
+
+export type UserUpdateWithoutMatchesAInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUpdateManyWithoutReceiverNestedInput
+  matchesB?: Prisma.MatchUpdateManyWithoutUserBNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMatchesAInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUncheckedUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUncheckedUpdateManyWithoutReceiverNestedInput
+  matchesB?: Prisma.MatchUncheckedUpdateManyWithoutUserBNestedInput
+}
+
+export type UserUpsertWithoutMatchesBInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMatchesBInput, Prisma.UserUncheckedUpdateWithoutMatchesBInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMatchesBInput, Prisma.UserUncheckedCreateWithoutMatchesBInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMatchesBInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMatchesBInput, Prisma.UserUncheckedUpdateWithoutMatchesBInput>
+}
+
+export type UserUpdateWithoutMatchesBInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUpdateManyWithoutUserANestedInput
+}
+
+export type UserUncheckedUpdateWithoutMatchesBInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  sentLikes?: Prisma.LikeUncheckedUpdateManyWithoutSenderNestedInput
+  receivedLikes?: Prisma.LikeUncheckedUpdateManyWithoutReceiverNestedInput
+  matchesA?: Prisma.MatchUncheckedUpdateManyWithoutUserANestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  sentLikes: number
+  receivedLikes: number
+  matchesA: number
+  matchesB: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sentLikes?: boolean | UserCountOutputTypeCountSentLikesArgs
+  receivedLikes?: boolean | UserCountOutputTypeCountReceivedLikesArgs
+  matchesA?: boolean | UserCountOutputTypeCountMatchesAArgs
+  matchesB?: boolean | UserCountOutputTypeCountMatchesBArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReceivedLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMatchesAArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMatchesBArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -343,6 +704,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   username?: boolean
   role?: boolean
+  sentLikes?: boolean | Prisma.User$sentLikesArgs<ExtArgs>
+  receivedLikes?: boolean | Prisma.User$receivedLikesArgs<ExtArgs>
+  matchesA?: boolean | Prisma.User$matchesAArgs<ExtArgs>
+  matchesB?: boolean | Prisma.User$matchesBArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -367,10 +733,24 @@ export type UserSelectScalar = {
 }
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "role", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sentLikes?: boolean | Prisma.User$sentLikesArgs<ExtArgs>
+  receivedLikes?: boolean | Prisma.User$receivedLikesArgs<ExtArgs>
+  matchesA?: boolean | Prisma.User$matchesAArgs<ExtArgs>
+  matchesB?: boolean | Prisma.User$matchesBArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    sentLikes: Prisma.$LikePayload<ExtArgs>[]
+    receivedLikes: Prisma.$LikePayload<ExtArgs>[]
+    matchesA: Prisma.$MatchPayload<ExtArgs>[]
+    matchesB: Prisma.$MatchPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
@@ -770,6 +1150,10 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  sentLikes<T extends Prisma.User$sentLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivedLikes<T extends Prisma.User$receivedLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  matchesA<T extends Prisma.User$matchesAArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$matchesAArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  matchesB<T extends Prisma.User$matchesBArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$matchesBArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -820,6 +1204,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -838,6 +1226,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -855,6 +1247,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -904,6 +1300,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -951,6 +1351,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which Users to fetch.
    */
@@ -1000,6 +1404,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The data needed to create a User.
    */
   data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
@@ -1047,6 +1455,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1114,6 +1526,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The filter to search for the User to update in case it exists.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1140,6 +1556,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1160,6 +1580,102 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.sentLikes
+ */
+export type User$sentLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Like
+   */
+  select?: Prisma.LikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Like
+   */
+  omit?: Prisma.LikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikeInclude<ExtArgs> | null
+  where?: Prisma.LikeWhereInput
+  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
+  cursor?: Prisma.LikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
+}
+
+/**
+ * User.receivedLikes
+ */
+export type User$receivedLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Like
+   */
+  select?: Prisma.LikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Like
+   */
+  omit?: Prisma.LikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikeInclude<ExtArgs> | null
+  where?: Prisma.LikeWhereInput
+  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
+  cursor?: Prisma.LikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
+}
+
+/**
+ * User.matchesA
+ */
+export type User$matchesAArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
+ * User.matchesB
+ */
+export type User$matchesBArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1171,4 +1687,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

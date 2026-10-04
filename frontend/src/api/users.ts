@@ -1,4 +1,4 @@
-import type { User, UserFormData } from '../types';
+import type { LikeResult, MatchedUser, User, UserFormData } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
@@ -62,4 +62,45 @@ export async function deleteUser(id: number): Promise<void> {
     method: 'DELETE',
   });
   await handleResponse<{ message: string }>(response);
+}
+
+export async function likeUser(
+  receiverId: number,
+  senderId: number,
+): Promise<LikeResult> {
+  const response = await fetch(`${API_URL}/users/${receiverId}/like`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ senderId }),
+  });
+  return handleResponse<LikeResult>(response);
+}
+
+export async function getMatches(userId: number): Promise<MatchedUser[]> {
+  const response = await fetch(`${API_URL}/users/${userId}/matches`);
+  const data = await handleResponse<{ matches: MatchedUser[] }>(response);
+  return data.matches;
+}
+
+export async function passUser(
+  receiverId: number,
+  senderId: number,
+): Promise<{ message: string }> {
+  const response = await fetch(`${API_URL}/users/${receiverId}/pass`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ senderId }),
+  });
+  return handleResponse<{ message: string }>(response);
+}
+
+export async function getDiscoverable(userId: number): Promise<User[]> {
+  const response = await fetch(`${API_URL}/users/${userId}/discover`);
+  return handleResponse<User[]>(response);
+}
+
+export async function getIncomingLikes(userId: number): Promise<User[]> {
+  const response = await fetch(`${API_URL}/users/${userId}/likes`);
+  const data = await handleResponse<{ likes: User[] }>(response);
+  return data.likes;
 }

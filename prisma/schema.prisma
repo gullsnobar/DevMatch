@@ -8,8 +8,35 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  username String
-  role     String
+  id            Int     @id @default(autoincrement())
+  name          String
+  username      String
+  role          String
+  sentLikes     Like[]  @relation("SentLikes")
+  receivedLikes Like[]  @relation("ReceivedLikes")
+  matchesA      Match[] @relation("MatchesA")
+  matchesB      Match[] @relation("MatchesB")
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  status     String   @default("LIKE")
+  createdAt  DateTime @default(now())
+  sender     User     @relation("SentLikes", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("ReceivedLikes", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+}
+
+model Match {
+  id        Int      @id @default(autoincrement())
+  userAId   Int
+  userBId   Int
+  createdAt DateTime @default(now())
+  userA     User     @relation("MatchesA", fields: [userAId], references: [id], onDelete: Cascade)
+  userB     User     @relation("MatchesB", fields: [userBId], references: [id], onDelete: Cascade)
+
+  @@unique([userAId, userBId])
 }

@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createUser, deleteUser, getUsers, updateUser } from './api/users';
-import { ConfirmDialog } from './components/ConfirmDialog';
-import { UserModal } from './components/UserModal';
-import type { User, UserFormData } from './types';
+import { getUsers } from './api/users';
+import { DiscoverView } from './components/DiscoverView';
+import { ManageUsers } from './components/ManageUsers';
+import { MatchesView } from './components/MatchesView';
+import type { User } from './types';
+
+type View = 'discover' | 'matches' | 'manage';
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
-  const [modal, setModal] = useState<'closed' | 'create' | 'edit'>('closed');
-  const [editingUser, setEditingUser] = useState<User | null>(null);
-  const [deletingUser, setDeletingUser] = useState<User | null>(null);
+  const [view, setView] = useState<View>('discover');
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [toast, setToast] = useState('');
   const toastTimer = useRef<number | undefined>(undefined);
 
@@ -30,68 +32,66 @@ function App() {
     void loadUsers();
   }, [loadUsers]);
 
+  const currentUser = users.find((user) => user.id === currentUserId) ?? null;
+
+  useEffect(() => {
+    if (currentUser) return;
+    setCurrentUserId(users.length > 0 ? users[0].id : null);
+  }, [users, currentUser]);
+
   function showToast(message: string) {
     window.clearTimeout(toastTimer.current);
     setToast(message);
     toastTimer.current = window.setTimeout(() => setToast(''), 3000);
   }
 
-  function openCreate() {
-    setEditingUser(null);
-    setModal('create');
-  }
-
-  function openEdit(user: User) {
-    setEditingUser(user);
-    setModal('edit');
-  }
-
-  async function handleSubmit(data: UserFormData) {
-    if (modal === 'create') {
-      const created = await createUser(data);
-      setUsers((current) => [...current, created]);
-      showToast(`User "${created.name}" created`);
-    } else if (editingUser) {
-      const changes: Partial<UserFormData> = {};
-      if (data.name !== editingUser.name) changes.name = data.name;
-      if (data.username !== editingUser.username)
-        changes.username = data.username;
-      if (data.role !== editingUser.role) changes.role = data.role;
-
-      const updated = await updateUser(editingUser.id, changes);
-      setUsers((current) =>
-        current.map((user) => (user.id === updated.id ? updated : user)),
-      );
-      showToast(`User "${updated.name}" updated`);
-    }
-    setModal('closed');
-    setEditingUser(null);
-  }
-
-  async function handleDelete() {
-    if (!deletingUser) return;
-    await deleteUser(deletingUser.id);
-    setUsers((current) =>
-      current.filter((user) => user.id !== deletingUser.id),
-    );
-    showToast(`User "${deletingUser.name}" deleted`);
-    setDeletingUser(null);
-  }
-
   return (
     <div className="page">
       <header className="header">
         <div>
-          <h1 className="brand">DevMatch</h1>
-          <h2 className="page-title">Users</h2>
+          <h1 className="brand">DevMatch ❤️</h1>
           <p className="page-subtitle">
-            Manage your developers and team members.
+            Discover people you may connect with.
           </p>
         </div>
-        <button className="btn btn-primary" onClick={openCreate}>
-          + Add User
-        </button>
+
+        {users.length > 0 && (
+          <label className="user-switch">
+            Playing as
+            <select
+              value={currentUserId ?? ''}
+              onChange={(event) => setCurrentUserId(Number(event.target.value))}
+            >
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name} (@{user.username})
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </header>
+
+      <nav className="tabs">
+        <button
+          className={`tab ${view === 'discover' ? 'tab-active' : ''}`}
+          onClick={() => setView('discover')}
+        >
+          Discover
+        </button>
+        <button
+          className={`tab ${view === 'matches' ? 'tab-active' : ''}`}
+          onClick={() => setView('matches')}
+        >
+          Matches
+        </button>
+        <button
+          className={`tab ${view === 'manage' ? 'tab-active' : ''}`}
+          onClick={() => setView('manage')}
+        >
+          Manage
+        </button>
+      </nav>
 
       <main>
         {loading && (
@@ -110,65 +110,39 @@ function App() {
           </div>
         )}
 
-        {!loading && !loadError && users.length === 0 && (
+        {!loading && !loadError && !currentUser && (
           <div className="state empty-state">
             <p className="empty-title">No users yet</p>
             <p className="empty-text">
-              Get started by adding your first team member.
+              Create a user in the Manage tab to start matching.
             </p>
-            <button className="btn btn-primary" onClick={openCreate}>
-              + Add User
+            <button className="btn btn-primary" onClick={() => setView('manage')}>
+              Go to Manage
             </button>
           </div>
         )}
 
-        {!loading && !loadError && users.length > 0 && (
-          <ul className="user-list">
-            {users.map((user) => (
-              <li key={user.id} className="user-card">
-                <div className="user-info">
-                  <span className="user-name">{user.name}</span>
-                  <span className="user-username">@{user.username}</span>
-                  <span className="user-role">{user.role}</span>
-                </div>
-                <div className="user-actions">
-                  <button
-                    className="btn btn-ghost"
-                    onClick={() => openEdit(user)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-ghost btn-danger-text"
-                    onClick={() => setDeletingUser(user)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        {!loading && !loadError && currentUser && (
+          <>
+            {view === 'discover' && (
+              <DiscoverView
+                key={currentUser.id}
+                currentUser={currentUser}
+                onToast={showToast}
+                onViewMatches={() => setView('matches')}
+              />
+            )}
+            {view === 'matches' && <MatchesView currentUser={currentUser} />}
+            {view === 'manage' && (
+              <ManageUsers
+                users={users}
+                onChanged={loadUsers}
+                onToast={showToast}
+              />
+            )}
+          </>
         )}
       </main>
-
-      {modal !== 'closed' && (
-        <UserModal
-          user={editingUser}
-          onClose={() => {
-            setModal('closed');
-            setEditingUser(null);
-          }}
-          onSubmit={handleSubmit}
-        />
-      )}
-
-      {deletingUser && (
-        <ConfirmDialog
-          user={deletingUser}
-          onCancel={() => setDeletingUser(null)}
-          onConfirm={handleDelete}
-        />
-      )}
 
       {toast && <div className="toast">{toast}</div>}
     </div>
