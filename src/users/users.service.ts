@@ -1,10 +1,6 @@
-import { Injectable } from '@nestjs/common';
-
-type CreateUserInput = {
-  name: string;
-  username: string;
-  role: string;
-};
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { UpdateUserDto } from './dto/update-user.dto.js';
 
 const users = [
   {
@@ -28,16 +24,48 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return users.find((user) => user.id === id) ?? null;
+    const user = users.find((user) => user.id === id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return user;
   }
 
-  create(userData: CreateUserInput) {
+  create(createUserDto: CreateUserDto) {
     const newUser = {
       id: users.length + 1,
-      ...userData,
+      ...createUserDto,
     };
 
     users.push(newUser);
     return newUser;
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    const user = users.find((user) => user.id === id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    if (updateUserDto.name !== undefined) user.name = updateUserDto.name;
+    if (updateUserDto.username !== undefined)
+      user.username = updateUserDto.username;
+    if (updateUserDto.role !== undefined) user.role = updateUserDto.role;
+
+    return user;
+  }
+
+  remove(id: number) {
+    const index = users.findIndex((user) => user.id === id);
+
+    if (index === -1) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    users.splice(index, 1);
+    return { message: 'User deleted successfully' };
   }
 }
