@@ -25,6 +25,9 @@ export class PrismaService
 
     const adapter = new PrismaPg({
       connectionString,
+      keepAlive: true,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 15_000,
     });
 
     super({ adapter });
