@@ -57,7 +57,7 @@ export function ManageUsers({ users, onChanged, onToast }: ManageUsersProps) {
     <section>
       <div className="section-header">
         <p className="manage-subtitle">
-          Admin area — create, edit, or remove users.
+          Admin area. Create, edit, or remove users.
         </p>
         <button className="btn btn-primary" onClick={openCreate}>
           + Add User

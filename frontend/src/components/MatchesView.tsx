@@ -57,14 +57,14 @@ export function MatchesView({ currentUser }: MatchesViewProps) {
       {pendingLikes.length > 0 && (
         <p className="likes-hint">
           {pendingLikes.length} {pendingLikes.length === 1 ? 'person' : 'people'}{' '}
-          liked you — like them back in Discover to match.
+          liked you. Like them back in Discover to match.
         </p>
       )}
 
       {matches.length === 0 ? (
         <div className="state empty-state">
           <p className="empty-title">No matches yet</p>
-          <p className="empty-text">Keep discovering — matches show up here.</p>
+          <p className="empty-text">Keep discovering. Matches show up here.</p>
         </div>
       ) : (
         <ul className="user-list">

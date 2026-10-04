@@ -108,7 +108,7 @@ export function DiscoverView({
       <div className="state empty-state">
         <p className="empty-title">No more people to discover</p>
         <p className="empty-text">
-          You've seen everyone — add more users in the Manage tab.
+          You've seen everyone. Add more users in the Manage tab.
         </p>
       </div>
     );
