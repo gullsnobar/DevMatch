@@ -7,7 +7,11 @@ interface ConfirmDialogProps {
   onConfirm: () => Promise<void>;
 }
 
-export function ConfirmDialog({ user, onCancel, onConfirm }: ConfirmDialogProps) {
+export function ConfirmDialog({
+  user,
+  onCancel,
+  onConfirm,
+}: ConfirmDialogProps) {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
 
@@ -28,16 +32,21 @@ export function ConfirmDialog({ user, onCancel, onConfirm }: ConfirmDialogProps)
         className="modal modal-sm"
         role="alertdialog"
         aria-modal="true"
+        aria-labelledby="delete-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <h2 className="modal-title">Delete user?</h2>
+        <h2 className="modal-title" id="delete-title">
+          Delete profile?
+        </h2>
         <p className="modal-text">
           Are you sure you want to delete <strong>{user.name}</strong>? This
-          action cannot be undone.
+          cannot be undone.
         </p>
-
-        {error && <div className="alert alert-error">{error}</div>}
-
+        {error && (
+          <div className="alert alert-error" role="alert">
+            {error}
+          </div>
+        )}
         <div className="modal-actions">
           <button
             type="button"
@@ -53,7 +62,7 @@ export function ConfirmDialog({ user, onCancel, onConfirm }: ConfirmDialogProps)
             onClick={handleConfirm}
             disabled={deleting}
           >
-            {deleting ? 'Deleting…' : 'Delete'}
+            {deleting ? 'Deleting...' : 'Delete profile'}
           </button>
         </div>
       </div>

@@ -13,24 +13,28 @@ export function MatchModal({ user, onClose, onViewMatches }: MatchModalProps) {
         className="modal modal-sm match-modal"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="match-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="match-emoji">🎉</div>
-        <h2 className="match-title">It's a Match!</h2>
+        <div className="match-symbol" aria-hidden="true">
+          It's mutual
+        </div>
+        <h2 className="match-title" id="match-title">
+          It's a match
+        </h2>
         <p className="modal-text match-text">
           You and <strong>{user.name}</strong> liked each other.
         </p>
-
         <div className="modal-actions match-actions">
           <button type="button" className="btn btn-secondary" onClick={onClose}>
-            Keep Swiping
+            Keep browsing
           </button>
           <button
             type="button"
             className="btn btn-primary"
             onClick={onViewMatches}
           >
-            View Matches
+            View matches
           </button>
         </div>
       </div>

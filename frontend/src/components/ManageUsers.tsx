@@ -54,20 +54,34 @@ export function ManageUsers({ users, onChanged, onToast }: ManageUsersProps) {
   }
 
   return (
-    <section>
-      <div className="section-header">
-        <p className="manage-subtitle">
-          Admin area. Create, edit, or remove users.
-        </p>
-        <button className="btn btn-primary" onClick={openCreate}>
-          + Add User
-        </button>
+    <section aria-labelledby="manage-title">
+      <div className="screen-heading manage-heading">
+        <div>
+          <span className="eyebrow">Demo setup</span>
+          <h2 className="screen-title" id="manage-title">
+            Manage profiles
+          </h2>
+          <p className="screen-subtitle">
+            Add people to discover. Switch profiles above to try both sides of a
+            match.
+          </p>
+        </div>
+        {users.length > 0 && (
+          <button className="btn btn-primary" onClick={openCreate}>
+            Add a profile
+          </button>
+        )}
       </div>
 
       {users.length === 0 ? (
         <div className="state empty-state">
-          <p className="empty-title">No users yet</p>
-          <p className="empty-text">Add your first team member.</p>
+          <p className="empty-title">No profiles yet</p>
+          <p className="empty-text">
+            Create the first profile to begin exploring.
+          </p>
+          <button className="btn btn-primary" onClick={openCreate}>
+            Create a profile
+          </button>
         </div>
       ) : (
         <ul className="user-list">
@@ -79,7 +93,10 @@ export function ManageUsers({ users, onChanged, onToast }: ManageUsersProps) {
                 <span className="user-role">{user.role}</span>
               </div>
               <div className="user-actions">
-                <button className="btn btn-ghost" onClick={() => openEdit(user)}>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => openEdit(user)}
+                >
                   Edit
                 </button>
                 <button

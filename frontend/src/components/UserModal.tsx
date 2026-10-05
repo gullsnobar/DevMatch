@@ -51,28 +51,36 @@ export function UserModal({ user, onClose, onSubmit }: UserModalProps) {
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay">
       <div
         className="modal"
         role="dialog"
         aria-modal="true"
-        onClick={(event) => event.stopPropagation()}
+        aria-labelledby="user-modal-title"
       >
-        <h2 className="modal-title">
-          {isEdit ? 'Edit User' : 'Add User'}
+        <h2 className="modal-title" id="user-modal-title">
+          {isEdit ? 'Edit profile' : 'Create a profile'}
         </h2>
-
-        {serverError && <div className="alert alert-error">{serverError}</div>}
+        <p className="modal-text">
+          Profiles appear in Discover and can be switched from the demo profile
+          menu.
+        </p>
+        {serverError && (
+          <div className="alert alert-error" role="alert">
+            {serverError}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="field">
-            <label htmlFor="user-name">Name</label>
+            <label htmlFor="user-name">Display name</label>
             <input
               id="user-name"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Gull"
+              autoFocus
             />
             {errors.name && <span className="field-error">{errors.name}</span>}
           </div>
@@ -85,6 +93,7 @@ export function UserModal({ user, onClose, onSubmit }: UserModalProps) {
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               placeholder="gull-dev"
+              autoComplete="off"
             />
             {errors.username && (
               <span className="field-error">{errors.username}</span>
@@ -92,13 +101,13 @@ export function UserModal({ user, onClose, onSubmit }: UserModalProps) {
           </div>
 
           <div className="field">
-            <label htmlFor="user-role">Role</label>
+            <label htmlFor="user-role">Role or specialty</label>
             <input
               id="user-role"
               type="text"
               value={role}
               onChange={(event) => setRole(event.target.value)}
-              placeholder="Software Engineer"
+              placeholder="Software engineer"
             />
             {errors.role && <span className="field-error">{errors.role}</span>}
           </div>
@@ -117,7 +126,11 @@ export function UserModal({ user, onClose, onSubmit }: UserModalProps) {
               className="btn btn-primary"
               disabled={submitting}
             >
-              {submitting ? 'Saving…' : isEdit ? 'Save Changes' : 'Create User'}
+              {submitting
+                ? 'Saving...'
+                : isEdit
+                  ? 'Save changes'
+                  : 'Create profile'}
             </button>
           </div>
         </form>
